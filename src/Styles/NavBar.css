@@ -1,0 +1,9 @@
+.nav_bar {
+  list-style-type: none;
+  justify-content: flex-end;
+}
+
+.nav_bar li {
+  padding: 10px;
+  cursor: pointer;
+}

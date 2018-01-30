@@ -1,0 +1,45 @@
+.conversation {
+  cursor: pointer;
+  height: 130px;
+  border-bottom: 1px solid black;
+  overflow: hidden;
+  text-align: left;
+}
+
+.conversation:hover {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.default_img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: auto 0;
+}
+
+.convo_date {
+  margin: auto;
+}
+
+.convo_info {
+  padding: 0 30px;
+  width: 40%;
+  margin: auto 0;
+}
+
+.convo_name {
+  font-weight: bold;
+}
+
+.last_message_preview {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.new_conv {
+  margin-bottom: 30px;
+  text-align: right;
+  cursor: pointer;
+}
