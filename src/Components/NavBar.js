@@ -34,7 +34,15 @@ class NavBar extends Component {
 
   onSignOut() {
     if (this.props.onSignOut) {
-      this.props.onSignOut();
+      axios.delete('api/v1/logout')
+        .then( (response) => {
+          if (response) {
+            this.props.onSignOut();
+          }
+        })
+        .catch( (error) => {
+          console.log(error);
+        });
     }
   }
 

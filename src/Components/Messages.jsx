@@ -68,6 +68,14 @@ class Messages extends Component {
       );
     }
 
+    if (messages.length === 0) {
+      return (
+        <NewMessageForm
+          onNewConvSuccess={this.handleNewConvSuccess.bind(this)}
+        />
+      );
+    }
+
     return '';
   }
 

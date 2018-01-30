@@ -32,14 +32,14 @@ class App extends Component {
   }
 
   handleSignOut() {
-    this.setState({authenticated: false, user: null});
+    this.setState({authenticated: false, user: null, conversations: null, messages: null});
     localStorage.removeItem('user');
     cookie.remove('token');
     location.reload();
   }
 
   handleLoginSuccess(user) {
-    this.setState({authenticated: true, user: user});
+    this.setState({authenticated: true, user: user, messages: null, conversations: null});
   }
 
   handleToggleSignUp() {
@@ -72,7 +72,7 @@ class App extends Component {
   }
 
   renderMessenger() {
-    if (this.state.authenticated && this.state.conversations.length > 0) {
+    if (this.state.authenticated && this.state.conversations) {
       return (
         <Messenger
           user={this.state.user}
