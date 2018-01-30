@@ -20,13 +20,31 @@ class Messenger extends Component {
     this.state = {
       messages: this.props.messages,
       selectedConversation: null,
-      showNewMessageForm: false
+      showNewMessageForm: false,
+      conversations: this.props.conversations
     };
   }
 
   createNewMessage() {
     this.setState({showNewMessageForm: true});
   }
+
+
+  addConvSuccess(conv) {
+    let newConversations = _.clone(this.state.conversations);
+
+    // check current conversations and see if it already existed bc then we have to replace
+    let convIndex = _.findIndex(this.state.conversations, (convo) => {
+	     return convo.id === conv.id;
+    })
+
+    // conversation did not exist and have to add it
+
+    convIndex === -1 ? newConversations.unshift(conv) : newConversations.splice(convIndex, 1, conv);
+
+    this.setState({conversations: newConversations});
+  }
+
 
   addMessageSuccess(message) {
     let newMessages = _.clone(this.state.messages);
@@ -43,7 +61,7 @@ class Messenger extends Component {
   }
 
   loadMessages(conv) {
-    this.setState({selectedConversation: conv});
+    this.setState({selectedConversation: conv, showNewMessageForm: false});
     axios.get(`/api/v1/conversations/${conv.id}/messages`)
       .then( (response) => {
         if (response.data) {
@@ -81,7 +99,7 @@ class Messenger extends Component {
       return (
         <div className="messenger_left">
           <Conversations
-            conversations={this.props.conversations}
+            conversations={this.state.conversations}
             onSelectConv={this.loadMessages.bind(this)}
             onNewMessage={this.createNewMessage.bind(this)}
           />
@@ -101,6 +119,7 @@ class Messenger extends Component {
           messages={this.state.messages}
           onReply={this.handleReply.bind(this)}
           showNewMessageForm={this.state.showNewMessageForm}
+          addNewConv={this.addConvSuccess.bind(this)}
         />
       </div>
     );

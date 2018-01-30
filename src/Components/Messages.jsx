@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import NewMessageForm from '../Components/NewMessageForm.jsx';
+
 class Messages extends Component {
   static propTypes = {
     user: PropTypes.object,
     messages: PropTypes.array,
     selectedConversation: PropTypes.object,
     onReply: PropTypes.func,
-    showNewMessageForm: PropTypes.bool
+    showNewMessageForm: PropTypes.bool,
+    addNewConv: PropTypes.func
   };
+
+  handleNewConvSuccess(conv) {
+    this.props.addNewConv(conv);
+  }
 
   constructor(props) {
     super(props);
@@ -48,17 +55,20 @@ class Messages extends Component {
         );
       });
 
-    if (messages.length > 0) {
+    if (messages.length > 0 && !this.props.showNewMessageForm) {
+      // move this out into a utils function
+      let conversation = this.props.selectedConversation;
+      let otherUser = (conversation.buyer.id === JSON.parse(localStorage.user).id ? conversation.seller : conversation.buyer);
       return (
         <div className="message_list">
+          <h3>{otherUser.name}</h3>
           {renderedMessages}
+          {this.renderMessageForm()}
         </div>
       );
     }
 
-    return (
-      <div>No Messages yet! Say hello!</div>
-    );
+    return '';
   }
 
   renderMessageForm() {
@@ -77,13 +87,15 @@ class Messages extends Component {
     }
 
     return '';
-
   }
 
   renderNewMessageForm() {
+    // move this into its own component
     if (this.props.showNewMessageForm) {
       return (
-        <div>New Message Form</div>
+        <NewMessageForm
+          onNewConvSuccess={this.handleNewConvSuccess.bind(this)}
+        />
       );
     }
 
@@ -94,7 +106,6 @@ class Messages extends Component {
     return (
       <div className="messages">
         {this.renderMessages()}
-        {this.renderMessageForm()}
         {this.renderNewMessageForm()}
       </div>
     );

@@ -83,7 +83,7 @@ class LoginSignup extends React.Component {
         }
       })
       .catch( (error) => {
-        console.log(error);
+        this.setState({errorMessage: error.response.data.message});
       });
   }
 
@@ -92,9 +92,9 @@ class LoginSignup extends React.Component {
       return (
         <div className="signup_form">
           <form onSubmit={this.handleSignUp.bind(this)}>
-            <input type="name" name="name" placeholder="Name" onChange={this.handleNameChange.bind(this) }/>
-            <input type="email" name="email" placeholder="Email" onChange={this.handleEmailChange.bind(this) }/>
-            <input type="password" name="password" placeholder="Password" onChange={this.handlePasswordChange.bind(this) } />
+            <input type="name" name="signup_name" placeholder="Name" onChange={this.handleNameChange.bind(this) }/>
+            <input type="email" name="signup_email" placeholder="Email" onChange={this.handleEmailChange.bind(this) }/>
+            <input type="password" name="signup_password" placeholder="Password" onChange={this.handlePasswordChange.bind(this) } />
             <button type="submit" className="btn black_btn">
               Sign Up
             </button>
@@ -106,8 +106,8 @@ class LoginSignup extends React.Component {
     return (
       <div className="login_form">
         <form onSubmit={this.handleLogin.bind(this)}>
-          <input placeholder="Email" type="email" name="email" onChange={this.handleEmailChange.bind(this) }/>
-          <input placeholder="Password" type="password" name="password" onChange={this.handlePasswordChange.bind(this) } />
+          <input autoComplete="off" placeholder="Email" type="email" name="login_email" onChange={this.handleEmailChange.bind(this)}/>
+          <input autoComplete="off" placeholder="Password" type="password" name="login_password" onChange={this.handlePasswordChange.bind(this) } />
           <button type="submit" className="btn black_btn">
             Login
           </button>

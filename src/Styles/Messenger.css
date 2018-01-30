@@ -1,5 +1,7 @@
 .messenger {
   justify-content: space-around;
+  padding-top: 20px;
+  border-top: 1px solid gray;
 }
 
 .messenger_left {
