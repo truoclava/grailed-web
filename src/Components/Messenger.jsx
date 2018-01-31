@@ -94,7 +94,7 @@ class Messenger extends Component {
   }
 
   renderConversations() {
-    if (this.state.conversations.length > 0) {
+    if (this.props.conversations.length > 0) {
       return (
         <div className="messenger_left">
           <Conversations

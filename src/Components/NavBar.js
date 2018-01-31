@@ -19,7 +19,11 @@ class NavBar extends Component {
       .then( (response) => {
         if (response.data.conversations) {
           this.props.onConvSuccess(response.data.conversations);
+        } else {
+          let conversations = [];
+          this.props.onConvSuccess(conversations);
         }
+
       })
       .catch( (error) => {
         console.log(error);
