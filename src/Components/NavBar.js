@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { Link } from 'react-router'
 import axios from 'axios';
+import cookie from 'react-cookies'
 
 import '../Styles/NavBar.css';
 
@@ -15,7 +16,8 @@ class NavBar extends Component {
   };
 
   loadConversations() {
-    axios.get('/api/v1/conversations')
+    let token = cookie.load('token');
+    axios.get('/api/v1/conversations', { headers: {Authorization: token} })
       .then( (response) => {
         if (response.data.conversations) {
           this.props.onConvSuccess(response.data.conversations);
@@ -38,7 +40,8 @@ class NavBar extends Component {
 
   onSignOut() {
     if (this.props.onSignOut) {
-      axios.delete('api/v1/logout')
+      let token = cookie.load('token');
+      axios.delete('api/v1/logout', { headers: {Authorization: token} })
         .then( (response) => {
           if (response) {
             this.props.onSignOut();

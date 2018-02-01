@@ -25,6 +25,12 @@ class Messenger extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.conversations !== this.props.conversations) {
+      this.setState({conversations: nextProps.conversations})
+    }
+  }
+
   createNewMessage() {
     this.setState({showNewMessageForm: true});
   }
@@ -94,7 +100,7 @@ class Messenger extends Component {
   }
 
   renderConversations() {
-    if (this.props.conversations.length > 0) {
+    if (this.state.conversations.length > 0) {
       return (
         <div className="messenger_left">
           <Conversations

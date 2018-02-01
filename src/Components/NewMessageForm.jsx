@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import cookie from 'react-cookies'
 
 class NewMessageForm extends Component {
   static propTypes = {
@@ -63,7 +64,8 @@ class NewMessageForm extends Component {
     //   this.setState({errorMessage: "You cannot send a message to yourself yet!"});
     // }
 
-    axios.post(`/api/v1/conversations/`, params)
+    let token = cookie.load('token');
+    axios.post(`/api/v1/conversations/`, params, { headers: {Authorization: token} })
       .then( (response) => {
         if (response.data) {
           this.props.onNewConvSuccess(response.data.conversation);
